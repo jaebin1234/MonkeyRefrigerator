@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import './Main.css';
 import BoardList from './board/BoardList';
+import BoardCreate from './board/BoardCreate';
 import { Link, Route, Switch } from 'react-router-dom';
 import Icon from '@mdi/react';
 import Box from '@mui/material/Box';
@@ -29,6 +30,9 @@ function Main() {
 						</Route>
 						<Route path="/login">
 							<Login />
+						</Route>
+						<Route path="/create">
+							<BoardCreate />
 						</Route>
 					</Switch>
 				</div>

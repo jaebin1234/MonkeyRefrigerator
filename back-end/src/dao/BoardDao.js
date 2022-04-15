@@ -85,4 +85,21 @@ module.exports = {
             );
         }
     },
+      selectBoardCategory: async function () {
+        try {
+            const query = `select id, name from category;
+;`
+            const connection = await pool.getConnection(async (conn) => conn);
+            const [rows] = await connection.query(query);
+            connection.release();
+            return rows;
+        } catch (err) {
+            return res.json(
+                response.successFalse(
+                    3001,
+                    '데이터베이스 연결에 실패하였습니다. BoardDao error - selectBoardCount'
+                )
+            );
+        }
+    },
 };
