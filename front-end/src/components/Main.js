@@ -9,9 +9,14 @@ import React, {
 } from 'react';
 import './Main.css';
 import BoardList from './board/BoardList';
+import BoardCreate from './board/BoardCreate';
 import { Link, Route, Switch } from 'react-router-dom';
 import Icon from '@mdi/react';
 import Box from '@mui/material/Box';
+//Login
+import { Login } from './user/Login';
+//Signup
+import Signup from './user/SignUp';
 
 function Main() {
 	return (
@@ -21,10 +26,15 @@ function Main() {
 					<Switch>
 						<Route exact path="/">
 							메인 페이지 - Router 들어가야함
-							<br />
 						</Route>
 						<Route path="/board">
 							<BoardList />
+						</Route>
+						<Route path="/login">
+							<Login />
+						</Route>
+						<Route path="/create">
+							<BoardCreate />
 						</Route>
 					</Switch>
 				</div>

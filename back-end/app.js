@@ -7,6 +7,7 @@ const path = require('path');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const env = require('dotenv').config();
+
 const compression = require('compression');
 const methodOverride = require('method-override');
 const cors = require('cors');
@@ -17,7 +18,7 @@ console.log('start express~');
 //express
 const app = express();
 
-//Middlewares
+//Middlewares - 우리가 다운로드 받은 모듈이나 라이브러리를 넣는다!!!
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(compression());
@@ -26,38 +27,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:8080','*'] }));
-// app.use(function (req, res, next) {
-// 	res.header('Access-Control-Allow-Origin', '*');
-// 	res.header(
-// 		'Access-Control-Allow-Methods',
-// 		'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-// 	);
-// 	res.header(
-// 		'Access-Control-Allow-Headers',
-// 		'x-access-token, Origin, X-Requested-With, Content-Type, Accept'
-// 	);
-// 	next();
-// });
+app.use(
+	cors({ origin: ['http://localhost:3000', 'http://localhost:8080', '*'] })
+);
 
-//indexRoute
 indexRoute(app);
-
-// // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-// 	next(createError(404));
-// });
-//
-// // error handler
-// app.use(function (err, req, res, next) {
-// 	// set locals, only providing error in development
-// 	res.locals.message = err.message;
-// 	res.locals.error = req.app.get('env') === 'development' ? err : {};
-//
-// 	// render the error page
-// 	res.status(err.status || 500);
-// 	res.render('error');
-// });
 
 const PORT = env.parsed.PORT;
 const BASE_URL = env.parsed.BASE_URL;
