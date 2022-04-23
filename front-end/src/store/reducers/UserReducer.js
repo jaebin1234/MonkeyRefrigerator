@@ -1,28 +1,79 @@
+//UserReducer.js
+import { reducerUtils, handleAsyncActions } from "../../api/AsyncUtil";
 import {
-  LOGIN_VALI,
-  LOGIN_VALI_ERROR,
-  LOGIN_VALI_SUCCESS,
-  ID_CHK,
+  SIGNUPFORM_INSERT,
+  USERINFORMATION_GET,
+  USERINFORMATION_GET_SUCCESS,
+  USERINFORMATION_GET_ERROR,
+  USERMATERIAL_GET,
+  USERMATERIAL_GET_SUCCESS,
+  USERMATERIAL_GET_ERROR,
+  DID_VOTE_CHECK,
+  REFRIGERATOR_GET,
+  REFRIGERATOR_GET_SUCCESS,
+  REFRIGERATOR_GET_ERROR,
+  BOARD_RANK_CHECK,
+  BOARD_RANK_CHECK_SUCCESS,
+  BOARD_RANK_CHECK_ERROR,
+  VOTE_BOARD_RANK,
+  VOTE_BOARD_RANK_SUCCESS,
+  VOTE_BOARD_RANK_ERROR,
 } from "../actions/UserAction";
-import {
-  reducerUtils,
-  handleAsyncActions,
-  createPromiseThunk,
-} from "../../api/AsyncUtil";
 
 const initialState = {
-  loginUser: reducerUtils.initial(),
-  idDoubleChk: reducerUtils.success(),
+  userInformation: reducerUtils.initial(),
+  userMaterialList: reducerUtils.initial(),
+  userRefrigeratorList: reducerUtils.initial(),
+  voteBoardRankList: reducerUtils.initial(),
+  voteboardrank: reducerUtils.initial(),
+};
+const initialVoteState = {
+  result: false,
 };
 export default function UserReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_VALI:
-    case LOGIN_VALI_SUCCESS:
-    case LOGIN_VALI_ERROR:
-      return handleAsyncActions(LOGIN_VALI, "loginVali")(state, action);
-    case ID_CHK:
-      // let check = [...state];
-      return handleAsyncActions(ID_CHK, "idDoubleChk")(state, action);
+    case SIGNUPFORM_INSERT:
+      return state;
+    case USERINFORMATION_GET:
+    case USERINFORMATION_GET_SUCCESS:
+    case USERINFORMATION_GET_ERROR:
+      return handleAsyncActions(USERINFORMATION_GET, "userInformation")(
+        state,
+        action
+      );
+    case USERMATERIAL_GET:
+    case USERMATERIAL_GET_SUCCESS:
+    case USERMATERIAL_GET_ERROR:
+      return handleAsyncActions(USERMATERIAL_GET, "userMaterialList")(
+        state,
+        action
+      );
+    case DID_VOTE_CHECK:
+      return {
+        ...initialVoteState,
+        result: action.result.isSuccess,
+      };
+    case REFRIGERATOR_GET:
+    case REFRIGERATOR_GET_SUCCESS:
+    case REFRIGERATOR_GET_ERROR:
+      return handleAsyncActions(REFRIGERATOR_GET, "userRefrigeratorList")(
+        state,
+        action
+      );
+    case BOARD_RANK_CHECK:
+    case BOARD_RANK_CHECK_SUCCESS:
+    case BOARD_RANK_CHECK_ERROR:
+      return handleAsyncActions(BOARD_RANK_CHECK, "voteBoardRankList")(
+        state,
+        action
+      );
+    case VOTE_BOARD_RANK:
+    case VOTE_BOARD_RANK_SUCCESS:
+    case VOTE_BOARD_RANK_ERROR:
+      return handleAsyncActions(VOTE_BOARD_RANK, "voteboardrank")(
+        state,
+        action
+      );
     default:
       return state;
   }

@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getMonth, getYear } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function BirthPick(props) {
   const [startDate, setStartDate] = useState(new Date());
+  const [birthday, setBirthday] = useState(new Date());
+
+  useEffect(() => {
+    if (props.type === "profile" && props.birthday) {
+      setTimeout(() => {
+        setStartDate(
+          new Date(
+            parseInt(props.birthday.substr(0, 4)),
+            parseInt(props.birthday.substr(5, 2)) - 1,
+            parseInt(props.birthday.substr(8, 2)) + 1
+          )
+        );
+      }, 200);
+    }
+  }, [props?.birthday]);
+
   const range = (start, end) => {
     return new Array(end - start).fill().map((d, i) => i + start);
   };
   const years = range(1990, getYear(new Date()) + 1);
+
   const months = [
     "January",
     "February",
@@ -23,10 +40,15 @@ function BirthPick(props) {
     "November",
     "December",
   ];
-  const sendTextValue = () => {
-    console.log(startDate);
-    props.setStartDate(startDate);
+
+  const sendTextValue = (date) => {
+    if (props.type == "profile") {
+      props.setBirthday(date);
+    } else if (props.type == "signup") {
+      props.setStartDate(date);
+    }
   };
+
   return (
     <DatePicker
       dateFormat="yyyy-MM-dd"
@@ -79,9 +101,9 @@ function BirthPick(props) {
         </div>
       )}
       selected={startDate}
-      onChange={(date) => {
+      onChange={async (date) => {
         setStartDate(date);
-        sendTextValue();
+        sendTextValue(date);
       }}
     />
   );
